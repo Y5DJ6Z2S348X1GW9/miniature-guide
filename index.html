@@ -307,16 +307,44 @@
     <script src="js/ui.js"></script>
     
     <!-- 增强游戏系统模块 -->
-    <script src="js/combo.js"></script>
-    <script src="js/timeeffects.js"></script>
-    <script src="js/weapons.js"></script>
-    <script src="js/hazards.js"></script>
-    <script src="js/advanced-enemies.js"></script>
-    <script src="js/progression.js"></script>
-    <script src="js/boss-system.js"></script>
-    <script src="js/enhanced-audio.js"></script>
+    <script src="js/combo.js?v=2.0"></script>
+    <script src="js/timeeffects.js?v=2.0"></script>
+    <script src="js/weapons.js?v=2.0"></script>
+    <script src="js/hazards.js?v=2.0"></script>
+    <script src="js/advanced-enemies.js?v=2.0"></script>
+    <script src="js/progression.js?v=2.0"></script>
+    <script src="js/boss-system.js?v=2.0"></script>
+    <script src="js/enhanced-audio.js?v=2.0"></script>
     
     <!-- 主游戏逻辑（最后加载） -->
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=2.0"></script>
+    
+    <!-- 调试检查脚本 -->
+    <script>
+    // 调试检查所有系统是否正确加载
+    window.addEventListener('load', function() {
+        console.log('=== 游戏系统加载检查 ===');
+        console.log('advancedEnemySystem:', typeof advancedEnemySystem, advancedEnemySystem);
+        console.log('advancedEnemySystem.update:', typeof advancedEnemySystem?.update);
+        console.log('comboSystem:', typeof comboSystem);
+        console.log('timeEffectsManager:', typeof timeEffectsManager);
+        console.log('environmentalHazardSystem:', typeof environmentalHazardSystem);
+        console.log('epicBossSystem:', typeof epicBossSystem);
+        console.log('progressionSystem:', typeof progressionSystem);
+        console.log('enhancedAudioManager:', typeof enhancedAudioManager);
+        console.log('========================');
+        
+        // 如果advanced-enemies.js没有正确加载，创建一个临时对象
+        if (typeof advancedEnemySystem === 'undefined') {
+            console.warn('advancedEnemySystem未定义，创建临时对象');
+            window.advancedEnemySystem = {
+                update: function(deltaTime) {
+                    console.log('临时advancedEnemySystem.update调用');
+                },
+                cleanup: function() {}
+            };
+        }
+    });
+    </script>
 </body>
 </html>
