@@ -1,0 +1,471 @@
+/* UI界面样式 - ui.css */
+
+/* 游戏UI覆盖层 */
+.ui-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.ui-overlay * {
+    pointer-events: auto;
+}
+
+/* 顶部信息栏 */
+.top-bar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.7) 0%, 
+        rgba(30, 30, 60, 0.8) 50%, 
+        rgba(0, 0, 0, 0.7) 100%);
+    padding: 15px 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(100, 181, 246, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* 信息容器样式 */
+.score-container,
+.level-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.label {
+    font-size: 0.9em;
+    color: #90caf9;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.value {
+    font-size: 1.8em;
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    min-width: 80px;
+    text-align: center;
+}
+
+/* 生命值容器 */
+.health-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.health-bar {
+    position: relative;
+    width: 150px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    border: 2px solid rgba(244, 67, 54, 0.5);
+    overflow: hidden;
+}
+
+.health-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #f44336, #ff5722, #ff9800);
+    border-radius: 8px;
+    transition: width 0.3s ease;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.health-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.health-icon {
+    width: 24px;
+    height: 24px;
+    filter: drop-shadow(0 0 5px rgba(244, 67, 54, 0.8));
+    transition: opacity 0.3s ease;
+}
+
+.health-icon.lost {
+    opacity: 0.3;
+    filter: grayscale(100%) drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
+}
+
+/* 控制按钮 */
+.controls {
+    display: flex;
+    gap: 10px;
+}
+
+.control-button {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(145deg, rgba(100, 100, 100, 0.8), rgba(150, 150, 150, 0.6));
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.control-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.control-button:active {
+    transform: scale(0.95);
+}
+
+.control-button img {
+    width: 30px;
+    height: 30px;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+}
+
+/* 武器状态显示 */
+.weapon-status {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.7) 0%, 
+        rgba(30, 30, 60, 0.8) 50%, 
+        rgba(0, 0, 0, 0.7) 100%);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(100, 181, 246, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.weapon-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.weapon-label {
+    color: #90caf9;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.weapon-level {
+    background: linear-gradient(45deg, #ff9800, #ffc107);
+    color: #000;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-shadow: none;
+}
+
+.weapon-cooldown {
+    width: 120px;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.cooldown-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #64b5f6, #42a5f5);
+    border-radius: 3px;
+    transition: width 0.1s linear;
+}
+
+/* 特殊能力按钮 */
+.special-abilities {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ability-button {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(145deg, rgba(100, 100, 100, 0.8), rgba(150, 150, 150, 0.6));
+    border: 2px solid rgba(100, 181, 246, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+}
+
+.ability-button:not(:disabled):hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(100, 181, 246, 0.6);
+    border-color: rgba(100, 181, 246, 0.8);
+}
+
+.ability-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(100%);
+}
+
+.ability-button img {
+    width: 35px;
+    height: 35px;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+}
+
+.ability-cooldown {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(
+        rgba(0, 0, 0, 0.8) 0deg,
+        rgba(0, 0, 0, 0.8) var(--cooldown-angle, 0deg),
+        transparent var(--cooldown-angle, 0deg)
+    );
+    border-radius: 50%;
+    transition: --cooldown-angle 0.1s linear;
+}
+
+/* 波次信息 */
+.wave-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.8) 0%, 
+        rgba(30, 30, 60, 0.9) 50%, 
+        rgba(0, 0, 0, 0.8) 100%);
+    padding: 20px 40px;
+    border-radius: 15px;
+    border: 2px solid rgba(100, 181, 246, 0.5);
+    backdrop-filter: blur(15px);
+    animation: waveInfoSlideIn 0.5s ease-out;
+}
+
+.wave-text {
+    font-size: 2em;
+    color: #64b5f6;
+    font-weight: bold;
+    text-shadow: 0 0 20px rgba(100, 181, 246, 0.8);
+    margin-bottom: 15px;
+}
+
+.wave-progress {
+    width: 200px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.wave-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #64b5f6, #42a5f5);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* 伤害数字 */
+.damage-number {
+    position: absolute;
+    color: #ff4444;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-shadow: 0 0 5px rgba(255, 68, 68, 0.8);
+    pointer-events: none;
+    animation: damageFloat 1s ease-out forwards;
+    z-index: 100;
+}
+
+.damage-number.critical {
+    color: #ffaa00;
+    font-size: 1.5em;
+    text-shadow: 0 0 10px rgba(255, 170, 0, 0.8);
+}
+
+.damage-number.heal {
+    color: #44ff44;
+    text-shadow: 0 0 5px rgba(68, 255, 68, 0.8);
+}
+
+/* 通知系统 */
+.notification {
+    position: absolute;
+    top: 100px;
+    right: 30px;
+    background: linear-gradient(135deg, 
+        rgba(76, 175, 80, 0.9) 0%, 
+        rgba(139, 195, 74, 0.8) 100%);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    border-left: 4px solid #4caf50;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    animation: notificationSlideIn 0.5s ease-out;
+    z-index: 50;
+    min-width: 250px;
+}
+
+.notification.warning {
+    background: linear-gradient(135deg, 
+        rgba(255, 152, 0, 0.9) 0%, 
+        rgba(255, 193, 7, 0.8) 100%);
+    border-left-color: #ff9800;
+}
+
+.notification.error {
+    background: linear-gradient(135deg, 
+        rgba(244, 67, 54, 0.9) 0%, 
+        rgba(229, 57, 53, 0.8) 100%);
+    border-left-color: #f44336;
+}
+
+.notification-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.notification-text {
+    font-size: 0.9em;
+    opacity: 0.9;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .top-bar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .health-bar {
+        width: 120px;
+        height: 16px;
+    }
+    
+    .health-icon {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .weapon-status {
+        bottom: 20px;
+        left: 20px;
+        padding: 10px;
+    }
+    
+    .special-abilities {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .ability-button {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .ability-button img {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .wave-text {
+        font-size: 1.5em;
+    }
+    
+    .wave-progress {
+        width: 150px;
+    }
+    
+    .notification {
+        right: 15px;
+        min-width: 200px;
+        padding: 12px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-bar {
+        left: 10px;
+        right: 10px;
+        padding: 10px;
+    }
+    
+    .value {
+        font-size: 1.4em;
+        min-width: 60px;
+    }
+    
+    .health-bar {
+        width: 100px;
+        height: 14px;
+    }
+    
+    .health-icon {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .weapon-status {
+        bottom: 15px;
+        left: 15px;
+        padding: 8px;
+    }
+    
+    .special-abilities {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .wave-info {
+        padding: 15px 25px;
+    }
+    
+    .wave-text {
+        font-size: 1.3em;
+    }
+    
+    .wave-progress {
+        width: 120px;
+        height: 6px;
+    }
+}

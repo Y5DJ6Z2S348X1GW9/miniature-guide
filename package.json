@@ -1,0 +1,36 @@
+{
+  "name": "space-shooter-game",
+  "version": "1.0.0",
+  "description": "一个功能完整的前端太空射击游戏",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx serve .",
+    "generate-assets": "cd scripts && python generate_assets.py"
+  },
+  "keywords": [
+    "game",
+    "html5",
+    "canvas",
+    "javascript",
+    "space-shooter",
+    "前端游戏"
+  ],
+  "author": "AI Assistant",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.0.0"
+  },
+  "engines": {
+    "node": ">=12.0.0",
+    "python": ">=3.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/space-shooter-game.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/space-shooter-game/issues"
+  },
+  "homepage": "https://github.com/your-username/space-shooter-game#readme"
+}

@@ -1,0 +1,422 @@
+/* 游戏界面样式 - game.css */
+
+/* 游戏画布 */
+#gameCanvas {
+    border: 2px solid rgba(100, 150, 255, 0.3);
+    border-radius: 10px;
+    background: transparent;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    display: block;
+    margin: 0 auto;
+}
+
+/* 开始界面 */
+#startScreen {
+    background: linear-gradient(
+        135deg,
+        rgba(10, 10, 30, 0.9) 0%,
+        rgba(30, 30, 60, 0.8) 50%,
+        rgba(20, 20, 40, 0.9) 100%
+    );
+}
+
+.title-container {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.game-title {
+    font-size: 4.5em;
+    font-weight: bold;
+    color: #64b5f6;
+    text-shadow: 
+        0 0 20px rgba(100, 181, 246, 0.8),
+        0 0 40px rgba(100, 181, 246, 0.4);
+    margin-bottom: 10px;
+    animation: titlePulse 3s ease-in-out infinite;
+}
+
+.game-subtitle {
+    font-size: 1.8em;
+    color: #90caf9;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-shadow: 0 0 10px rgba(144, 202, 249, 0.6);
+    animation: subtitleGlow 2s ease-in-out infinite alternate;
+}
+
+.title-effects {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.title-effects::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background: linear-gradient(45deg, transparent 30%, rgba(100, 181, 246, 0.1) 50%, transparent 70%);
+    animation: titleSweep 4s linear infinite;
+}
+
+/* 菜单容器 */
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.menu-button {
+    position: relative;
+    background: linear-gradient(145deg, rgba(25, 118, 210, 0.8), rgba(66, 165, 245, 0.6));
+    border: 2px solid rgba(100, 181, 246, 0.4);
+    border-radius: 15px;
+    padding: 18px 50px;
+    color: white;
+    font-size: 1.3em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    min-width: 250px;
+    overflow: hidden;
+}
+
+.menu-button span {
+    position: relative;
+    z-index: 2;
+}
+
+.button-glow {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.menu-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 
+        0 10px 30px rgba(25, 118, 210, 0.4),
+        0 0 20px rgba(100, 181, 246, 0.6);
+    border-color: rgba(100, 181, 246, 0.8);
+}
+
+.menu-button:hover .button-glow {
+    left: 100%;
+}
+
+.menu-button:active {
+    transform: translateY(-1px);
+}
+
+/* 背景动画 */
+.background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.floating-stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.floating-stars::before,
+.floating-stars::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.8),
+        20px 30px 0 rgba(255, 255, 255, 0.6),
+        40px 70px 0 rgba(255, 255, 255, 0.4),
+        90px 40px 0 rgba(255, 255, 255, 0.7),
+        130px 80px 0 rgba(255, 255, 255, 0.5),
+        160px 30px 0 rgba(255, 255, 255, 0.6),
+        200px 90px 0 rgba(255, 255, 255, 0.4),
+        240px 60px 0 rgba(255, 255, 255, 0.8),
+        280px 20px 0 rgba(255, 255, 255, 0.5);
+    animation: floatingStars 20s linear infinite;
+}
+
+.floating-stars::after {
+    animation-delay: -10s;
+    animation-duration: 25s;
+}
+
+/* 游戏结束界面 */
+.game-over-title {
+    color: #f44336;
+    text-shadow: 0 0 20px rgba(244, 67, 54, 0.6);
+}
+
+.final-stats {
+    margin: 30px 0;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+}
+
+.stat-label {
+    color: #90caf9;
+    font-weight: bold;
+}
+
+.stat-value {
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* 成就容器 */
+.achievement-container {
+    margin: 20px 0;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.achievement {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 5px 0;
+    background: linear-gradient(90deg, rgba(255, 193, 7, 0.2), rgba(255, 235, 59, 0.1));
+    border-left: 4px solid #ffc107;
+    border-radius: 5px;
+    animation: achievementSlideIn 0.5s ease-out;
+}
+
+.achievement-icon {
+    font-size: 1.5em;
+    margin-right: 10px;
+}
+
+.achievement-text {
+    flex: 1;
+    text-align: left;
+}
+
+.achievement-title {
+    font-weight: bold;
+    color: #ffc107;
+}
+
+.achievement-desc {
+    font-size: 0.9em;
+    color: #fff;
+    opacity: 0.8;
+}
+
+/* 说明界面 */
+.instructions-modal {
+    max-width: 700px;
+    text-align: left;
+}
+
+.instructions-content {
+    margin: 20px 0;
+}
+
+.instruction-section {
+    margin-bottom: 30px;
+}
+
+.instruction-section h3 {
+    color: #64b5f6;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    border-bottom: 2px solid rgba(100, 181, 246, 0.3);
+    padding-bottom: 5px;
+}
+
+.instruction-section p {
+    line-height: 1.6;
+    color: #e0e0e0;
+    margin-bottom: 15px;
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.control-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(100, 181, 246, 0.2);
+}
+
+.control-item span {
+    color: #e0e0e0;
+}
+
+.powerups-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.powerup-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(100, 181, 246, 0.2);
+}
+
+.powerup-item img {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+}
+
+.powerup-item strong {
+    color: #64b5f6;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.powerup-item p {
+    color: #e0e0e0;
+    font-size: 0.9em;
+    margin: 0;
+}
+
+/* 设置界面 */
+.settings-content {
+    text-align: left;
+    margin: 20px 0;
+}
+
+.setting-group {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(100, 181, 246, 0.2);
+}
+
+.setting-group label {
+    display: block;
+    color: #64b5f6;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.slider-container input[type="range"] {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.slider-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(45deg, #64b5f6, #42a5f5);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(100, 181, 246, 0.5);
+}
+
+.slider-container span {
+    color: #ffffff;
+    font-weight: bold;
+    min-width: 50px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(100, 181, 246, 0.3);
+    border-radius: 5px;
+    color: white;
+    font-size: 1em;
+}
+
+select option {
+    background: #1a1a2e;
+    color: white;
+}
+
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    accent-color: #64b5f6;
+}
+
+.settings-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+/* 暂停界面 */
+.pause-stats {
+    margin: 20px 0;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+.pause-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
+}

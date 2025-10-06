@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>太空射击 - Space Shooter</title>
+    
+    <!-- 分模块的CSS文件 -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/ui.css">
+    <link rel="stylesheet" href="css/effects.css">
+    <link rel="stylesheet" href="css/advanced.css">
+    <link rel="stylesheet" href="css/progression.css">
+    
+    <!-- 预加载关键资源 -->
+    <link rel="preload" href="assets/images/player_ship.png" as="image">
+    <link rel="preload" href="assets/images/background_stars.jpg" as="image">
+</head>
+<body>
+    <!-- 游戏主容器 -->
+    <div id="gameContainer">
+        <!-- 开始界面 -->
+        <div id="startScreen" class="screen active">
+            <div class="title-container">
+                <h1 class="game-title">太空射击</h1>
+                <h2 class="game-subtitle">SPACE SHOOTER</h2>
+                <div class="title-effects"></div>
+            </div>
+            
+            <div class="menu-container">
+                <button id="startButton" class="menu-button">
+                    <span>开始游戏</span>
+                    <div class="button-glow"></div>
+                </button>
+                <button id="instructionsButton" class="menu-button">
+                    <span>游戏说明</span>
+                    <div class="button-glow"></div>
+                </button>
+                <button id="settingsButton" class="menu-button">
+                    <span>设置</span>
+                    <div class="button-glow"></div>
+                </button>
+            </div>
+            
+            <div class="background-animation">
+                <div class="floating-stars"></div>
+            </div>
+        </div>
+        
+        <!-- 游戏界面 -->
+        <div id="gameScreen" class="screen">
+            <canvas id="gameCanvas" width="1200" height="800"></canvas>
+            
+            <!-- 游戏UI覆盖层 -->
+            <div id="gameUI" class="ui-overlay">
+                <!-- 顶部信息栏 -->
+                <div class="top-bar">
+                    <div class="score-container">
+                        <span class="label">得分</span>
+                        <span id="scoreValue" class="value">0</span>
+                    </div>
+                    
+                    <div class="level-container">
+                        <span class="label">等级</span>
+                        <span id="levelValue" class="value">1</span>
+                    </div>
+                    
+                    <div class="health-container">
+                        <span class="label">生命</span>
+                        <div id="healthBar" class="health-bar">
+                            <div class="health-fill"></div>
+                            <div class="health-icons">
+                                <img src="assets/images/icon_health.png" class="health-icon" alt="生命">
+                                <img src="assets/images/icon_health.png" class="health-icon" alt="生命">
+                                <img src="assets/images/icon_health.png" class="health-icon" alt="生命">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <button id="pauseButton" class="control-button">
+                            <img src="assets/images/button_pause.png" alt="暂停">
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 武器状态显示 -->
+                <div class="weapon-status">
+                    <div class="weapon-info">
+                        <span class="weapon-label">武器</span>
+                        <div id="weaponLevel" class="weapon-level">LV.1</div>
+                    </div>
+                    <div id="weaponCooldown" class="weapon-cooldown">
+                        <div class="cooldown-fill"></div>
+                    </div>
+                </div>
+                
+                <!-- 特殊能力按钮 -->
+                <div class="special-abilities">
+                    <button id="shieldButton" class="ability-button" disabled>
+                        <img src="assets/images/powerup_shield.png" alt="护盾">
+                        <div class="ability-cooldown"></div>
+                    </button>
+                </div>
+                
+                <!-- 波次信息 -->
+                <div id="waveInfo" class="wave-info hidden">
+                    <div class="wave-text">第 <span id="waveNumber">1</span> 波</div>
+                    <div class="wave-progress">
+                        <div class="wave-progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 暂停界面 -->
+        <div id="pauseScreen" class="screen modal-screen">
+            <div class="modal-container">
+                <h2>游戏暂停</h2>
+                <div class="pause-stats">
+                    <div class="stat">
+                        <span class="stat-label">当前得分</span>
+                        <span class="stat-value" id="pauseScore">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">存活时间</span>
+                        <span class="stat-value" id="survivalTime">00:00</span>
+                    </div>
+                </div>
+                
+                <div class="pause-buttons">
+                    <button id="resumeButton" class="modal-button">继续游戏</button>
+                    <button id="restartButton" class="modal-button">重新开始</button>
+                    <button id="mainMenuButton" class="modal-button">主菜单</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 游戏结束界面 -->
+        <div id="gameOverScreen" class="screen modal-screen">
+            <div class="modal-container">
+                <h2 class="game-over-title">游戏结束</h2>
+                <div class="final-stats">
+                    <div class="stat-row">
+                        <span class="stat-label">最终得分</span>
+                        <span class="stat-value" id="finalScore">0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">最高等级</span>
+                        <span class="stat-value" id="finalLevel">1</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">存活时间</span>
+                        <span class="stat-value" id="finalTime">00:00</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">击败敌人</span>
+                        <span class="stat-value" id="enemiesKilled">0</span>
+                    </div>
+                </div>
+                
+                <div class="achievement-container" id="achievements">
+                    <!-- 动态添加成就 -->
+                </div>
+                
+                <div class="game-over-buttons">
+                    <button id="playAgainButton" class="modal-button primary">再玩一次</button>
+                    <button id="backToMenuButton" class="modal-button">返回主菜单</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 说明界面 -->
+        <div id="instructionsScreen" class="screen modal-screen">
+            <div class="modal-container instructions-modal">
+                <h2>游戏说明</h2>
+                
+                <div class="instructions-content">
+                    <div class="instruction-section">
+                        <h3>游戏目标</h3>
+                        <p>操控你的太空战舰，击败来袭的敌人，获得高分并生存尽可能长的时间！</p>
+                    </div>
+                    
+                    <div class="instruction-section">
+                        <h3>操作方法</h3>
+                        <div class="controls-grid">
+                            <div class="control-item">
+                                <kbd>W A S D</kbd>
+                                <span>移动飞船</span>
+                            </div>
+                            <div class="control-item">
+                                <kbd>空格</kbd>
+                                <span>射击</span>
+                            </div>
+                            <div class="control-item">
+                                <kbd>Shift</kbd>
+                                <span>激活护盾</span>
+                            </div>
+                            <div class="control-item">
+                                <kbd>P</kbd>
+                                <span>暂停游戏</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="instruction-section">
+                        <h3>道具说明</h3>
+                        <div class="powerups-grid">
+                            <div class="powerup-item">
+                                <img src="assets/images/powerup_health.png" alt="生命">
+                                <div>
+                                    <strong>生命恢复</strong>
+                                    <p>恢复1点生命值</p>
+                                </div>
+                            </div>
+                            <div class="powerup-item">
+                                <img src="assets/images/powerup_weapon.png" alt="武器">
+                                <div>
+                                    <strong>武器升级</strong>
+                                    <p>提升火力等级</p>
+                                </div>
+                            </div>
+                            <div class="powerup-item">
+                                <img src="assets/images/powerup_shield.png" alt="护盾">
+                                <div>
+                                    <strong>护盾充能</strong>
+                                    <p>获得临时护盾</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="closeInstructionsButton" class="modal-button">关闭</button>
+            </div>
+        </div>
+        
+        <!-- 设置界面 -->
+        <div id="settingsScreen" class="screen modal-screen">
+            <div class="modal-container">
+                <h2>游戏设置</h2>
+                
+                <div class="settings-content">
+                    <div class="setting-group">
+                        <label for="volumeSlider">音效音量</label>
+                        <div class="slider-container">
+                            <input type="range" id="volumeSlider" min="0" max="100" value="70">
+                            <span id="volumeValue">70%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label for="difficultySelect">难度等级</label>
+                        <select id="difficultySelect">
+                            <option value="easy">简单</option>
+                            <option value="normal" selected>普通</option>
+                            <option value="hard">困难</option>
+                            <option value="nightmare">噩梦</option>
+                        </select>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label>
+                            <input type="checkbox" id="particleEffects" checked>
+                            启用粒子特效
+                        </label>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label>
+                            <input type="checkbox" id="screenShake" checked>
+                            屏幕震动效果
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="settings-buttons">
+                    <button id="resetSettingsButton" class="modal-button">重置默认</button>
+                    <button id="closeSettingsButton" class="modal-button primary">保存设置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 加载界面 -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-container">
+            <div class="loading-ship">
+                <img src="assets/images/player_ship.png" alt="Loading">
+            </div>
+            <div class="loading-text">加载中...</div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 分模块的JavaScript文件 -->
+    <script src="js/input.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/collision.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/bullets.js"></script>
+    <script src="js/enemies.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/ui.js"></script>
+    
+    <!-- 增强游戏系统模块 -->
+    <script src="js/combo.js"></script>
+    <script src="js/timeeffects.js"></script>
+    <script src="js/weapons.js"></script>
+    <script src="js/hazards.js"></script>
+    <script src="js/advanced-enemies.js"></script>
+    <script src="js/progression.js"></script>
+    <script src="js/boss-system.js"></script>
+    <script src="js/enhanced-audio.js"></script>
+    
+    <!-- 主游戏逻辑（最后加载） -->
+    <script src="js/main.js"></script>
+</body>
+</html>

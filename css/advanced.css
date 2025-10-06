@@ -1,0 +1,511 @@
+/* 高级游戏系统样式 - advanced.css */
+
+/* 连击系统样式 */
+.combo-display {
+    position: absolute;
+    top: 50%;
+    right: 30px;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, 
+        rgba(255, 165, 0, 0.9) 0%, 
+        rgba(255, 69, 0, 0.8) 100%);
+    border: 2px solid rgba(255, 215, 0, 0.8);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(255, 165, 0, 0.4);
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.combo-display.hidden {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.8);
+    pointer-events: none;
+}
+
+.combo-display.combo-warning {
+    animation: comboWarning 0.5s ease-in-out infinite;
+}
+
+.combo-text {
+    font-size: 3em;
+    font-weight: bold;
+    color: #ffff00;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 0, 0.8),
+        0 0 20px rgba(255, 255, 0, 0.6);
+    margin-bottom: 5px;
+    line-height: 1;
+}
+
+.combo-label {
+    font-size: 0.9em;
+    color: #ffffff;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+}
+
+.combo-tier {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.combo-progress {
+    width: 100%;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.combo-progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+}
+
+/* 时间特效系统样式 */
+.time-effects-ui {
+    position: absolute;
+    bottom: 120px;
+    left: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.bullet-time-bar {
+    background: linear-gradient(135deg, 
+        rgba(100, 181, 246, 0.9) 0%, 
+        rgba(33, 150, 243, 0.8) 100%);
+    border: 2px solid rgba(100, 181, 246, 0.6);
+    border-radius: 10px;
+    padding: 12px 16px;
+    backdrop-filter: blur(8px);
+    min-width: 150px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bullet-time-bar.cooldown::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(var(--cooldown-progress) * 100%);
+    height: 100%;
+    background: rgba(255, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+.time-label {
+    font-size: 0.85em;
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.time-progress {
+    width: 100%;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.time-progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.bullet-time-fill {
+    box-shadow: 0 0 8px rgba(100, 181, 246, 0.8);
+}
+
+.time-indicator {
+    background: linear-gradient(135deg, 
+        rgba(138, 43, 226, 0.95) 0%, 
+        rgba(75, 0, 130, 0.9) 100%);
+    border: 2px solid rgba(148, 0, 211, 0.8);
+    border-radius: 25px;
+    padding: 12px 24px;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+    animation: timeIndicatorPulse 1s ease-in-out infinite;
+}
+
+.time-indicator.hidden {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+
+/* 高级武器系统样式 */
+.advanced-weapon-ui {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.weapon-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.weapon-display {
+    background: linear-gradient(135deg, 
+        rgba(76, 175, 80, 0.9) 0%, 
+        rgba(56, 142, 60, 0.8) 100%);
+    border: 2px solid rgba(129, 199, 132, 0.6);
+    border-radius: 12px;
+    padding: 10px 15px;
+    backdrop-filter: blur(8px);
+    min-width: 140px;
+    position: relative;
+}
+
+.weapon-display.secondary {
+    background: linear-gradient(135deg, 
+        rgba(255, 152, 0, 0.9) 0%, 
+        rgba(245, 124, 0, 0.8) 100%);
+    border-color: rgba(255, 183, 77, 0.6);
+}
+
+.weapon-display.special {
+    background: linear-gradient(135deg, 
+        rgba(156, 39, 176, 0.9) 0%, 
+        rgba(123, 31, 162, 0.8) 100%);
+    border-color: rgba(186, 104, 200, 0.6);
+}
+
+.weapon-display.hidden {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+
+.weapon-name {
+    font-size: 0.9em;
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.weapon-level {
+    font-size: 0.8em;
+    color: #ffff00;
+    font-weight: bold;
+}
+
+.weapon-ammo {
+    font-size: 0.75em;
+    color: #87ceeb;
+    position: absolute;
+    top: 8px;
+    right: 12px;
+}
+
+.heat-bar, .charge-bar {
+    background: linear-gradient(135deg, 
+        rgba(244, 67, 54, 0.9) 0%, 
+        rgba(211, 47, 47, 0.8) 100%);
+    border: 2px solid rgba(239, 154, 154, 0.6);
+    border-radius: 10px;
+    padding: 8px 12px;
+    backdrop-filter: blur(8px);
+    min-width: 120px;
+}
+
+.charge-bar {
+    background: linear-gradient(135deg, 
+        rgba(255, 193, 7, 0.9) 0%, 
+        rgba(255, 152, 0, 0.8) 100%);
+    border-color: rgba(255, 224, 130, 0.6);
+}
+
+.heat-bar.overheated {
+    animation: overheatedPulse 0.5s ease-in-out infinite;
+}
+
+.heat-label, .charge-label {
+    font-size: 0.8em;
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.heat-progress, .charge-progress {
+    width: 100%;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.heat-fill, .charge-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* 特殊效果样式 */
+.bullet-time {
+    filter: saturate(0.7) brightness(0.9);
+}
+
+.bullet-time-trails * {
+    box-shadow: 0 0 10px rgba(100, 181, 246, 0.6);
+}
+
+.time-freeze {
+    filter: hue-rotate(200deg) saturate(1.5);
+}
+
+.time-accelerate {
+    filter: saturate(1.5) contrast(1.2);
+}
+
+.screen-flash {
+    background: radial-gradient(circle at center, 
+        rgba(255, 255, 255, var(--flash-intensity, 0.2)) 0%, 
+        transparent 70%);
+    pointer-events: none;
+}
+
+/* 动画关键帧 */
+@keyframes comboWarning {
+    0%, 100% {
+        border-color: rgba(255, 215, 0, 0.8);
+        box-shadow: 0 10px 30px rgba(255, 165, 0, 0.4);
+    }
+    50% {
+        border-color: rgba(255, 0, 0, 0.8);
+        box-shadow: 0 10px 30px rgba(255, 0, 0, 0.6);
+    }
+}
+
+@keyframes timeIndicatorPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 12px 35px rgba(138, 43, 226, 0.6);
+    }
+}
+
+@keyframes overheatedPulse {
+    0%, 100% {
+        border-color: rgba(239, 154, 154, 0.6);
+        box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+    }
+    50% {
+        border-color: rgba(255, 0, 0, 0.9);
+        box-shadow: 0 8px 25px rgba(255, 0, 0, 0.6);
+    }
+}
+
+@keyframes weaponCharge {
+    0% {
+        background: linear-gradient(90deg, #64b5f6, #42a5f5);
+    }
+    100% {
+        background: linear-gradient(90deg, #ffff00, #ff8c00);
+    }
+}
+
+@keyframes electricPulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(0, 255, 255, 1);
+    }
+}
+
+/* 环境危险效果 */
+.hazard-warning {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, 
+        rgba(255, 87, 34, 0.95) 0%, 
+        rgba(244, 67, 54, 0.9) 100%);
+    border: 3px solid rgba(255, 152, 0, 0.8);
+    border-radius: 20px;
+    padding: 20px 30px;
+    color: #ffffff;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 15px 40px rgba(255, 87, 34, 0.5);
+    animation: hazardWarningPulse 1s ease-in-out infinite;
+    z-index: 200;
+}
+
+@keyframes hazardWarningPulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow: 0 15px 40px rgba(255, 87, 34, 0.5);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        box-shadow: 0 20px 50px rgba(255, 87, 34, 0.7);
+    }
+}
+
+/* 粒子系统增强 */
+.particle-enhanced {
+    filter: drop-shadow(0 0 8px currentColor);
+}
+
+.cosmic-background {
+    background: radial-gradient(ellipse at center, 
+        rgba(75, 0, 130, 0.3) 0%, 
+        rgba(25, 25, 112, 0.2) 50%, 
+        rgba(0, 0, 0, 0.9) 100%);
+}
+
+/* 响应式设计增强 */
+@media (max-width: 1024px) {
+    .combo-display {
+        right: 15px;
+        padding: 15px;
+        min-width: 100px;
+    }
+    
+    .combo-text {
+        font-size: 2.5em;
+    }
+    
+    .time-effects-ui {
+        bottom: 100px;
+        left: 15px;
+    }
+    
+    .advanced-weapon-ui {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .weapon-display {
+        min-width: 120px;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .combo-display {
+        top: 40%;
+        right: 10px;
+        padding: 12px;
+        min-width: 80px;
+    }
+    
+    .combo-text {
+        font-size: 2em;
+    }
+    
+    .time-effects-ui {
+        bottom: 80px;
+        left: 10px;
+    }
+    
+    .bullet-time-bar {
+        min-width: 120px;
+        padding: 10px 12px;
+    }
+    
+    .advanced-weapon-ui {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .weapon-display {
+        min-width: 100px;
+        padding: 6px 10px;
+    }
+    
+    .weapon-name {
+        font-size: 0.8em;
+    }
+    
+    .time-indicator {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .combo-display {
+        transform: translateY(-50%) scale(0.8);
+    }
+    
+    .time-effects-ui {
+        transform: scale(0.9);
+    }
+    
+    .advanced-weapon-ui {
+        transform: scale(0.9);
+    }
+    
+    .hazard-warning {
+        padding: 15px 20px;
+        font-size: 1.2em;
+    }
+}
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+    .combo-display,
+    .time-effects-ui > *,
+    .advanced-weapon-ui > * {
+        border-width: 3px;
+        box-shadow: none;
+    }
+    
+    .combo-text,
+    .weapon-name,
+    .time-label {
+        text-shadow: none;
+        font-weight: 900;
+    }
+}
+
+/* 减少动画模式 */
+@media (prefers-reduced-motion: reduce) {
+    .combo-display,
+    .time-indicator,
+    .weapon-display,
+    .hazard-warning {
+        animation: none !important;
+        transition: opacity 0.3s ease !important;
+    }
+    
+    .bullet-time,
+    .time-freeze,
+    .time-accelerate {
+        filter: none !important;
+    }
+}

@@ -1,0 +1,563 @@
+/* 进展系统样式 - progression.css */
+
+/* 等级显示 */
+.level-display {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    background: linear-gradient(135deg, 
+        rgba(76, 175, 80, 0.95) 0%, 
+        rgba(56, 142, 60, 0.9) 100%);
+    border: 2px solid rgba(129, 199, 132, 0.8);
+    border-radius: 15px;
+    padding: 15px 20px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+    min-width: 120px;
+    color: #ffffff;
+}
+
+.level-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.level-number {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: #ffff00;
+    text-shadow: 
+        0 0 8px rgba(255, 255, 0, 0.8),
+        0 0 15px rgba(255, 255, 0, 0.5);
+    line-height: 1;
+}
+
+.level-label {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #e8f5e8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.exp-bar {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.exp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, 
+        #4caf50 0%, 
+        #8bc34a 50%, 
+        #cddc39 100%);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+    position: relative;
+}
+
+.exp-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        transparent 100%);
+    animation: expShimmer 2s ease-in-out infinite;
+}
+
+.exp-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.7em;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+}
+
+/* 货币显示 */
+.currency-display {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.currency-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, 
+        rgba(255, 193, 7, 0.95) 0%, 
+        rgba(255, 152, 0, 0.9) 100%);
+    border: 2px solid rgba(255, 224, 130, 0.8);
+    border-radius: 20px;
+    padding: 8px 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+    min-width: 80px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.currency-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
+}
+
+.currency-icon {
+    font-size: 1.2em;
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.5));
+}
+
+.currency-amount {
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    font-size: 0.95em;
+}
+
+/* 技能点显示 */
+.skill-points-display {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    background: linear-gradient(135deg, 
+        rgba(156, 39, 176, 0.95) 0%, 
+        rgba(123, 31, 162, 0.9) 100%);
+    border: 2px solid rgba(186, 104, 200, 0.8);
+    border-radius: 18px;
+    padding: 12px 18px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 25px rgba(156, 39, 176, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+}
+
+.skill-points-display.hidden {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    pointer-events: none;
+}
+
+.skill-points-display.pulsing {
+    animation: skillPointsPulse 1.5s ease-in-out infinite;
+}
+
+.skill-points-icon {
+    font-size: 1.8em;
+    color: #ffff00;
+    text-shadow: 
+        0 0 8px rgba(255, 255, 0, 0.8),
+        0 0 15px rgba(255, 255, 0, 0.5);
+    animation: starRotate 3s linear infinite;
+}
+
+.skill-points-text {
+    color: #ffffff;
+}
+
+.skill-points-label {
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.9;
+}
+
+.skill-points-amount {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #ffff00;
+    text-shadow: 0 0 6px rgba(255, 255, 0, 0.6);
+}
+
+/* Boss系统样式 */
+.boss-health-bar {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, 
+        rgba(244, 67, 54, 0.95) 0%, 
+        rgba(211, 47, 47, 0.9) 100%);
+    border: 3px solid rgba(255, 87, 34, 0.8);
+    border-radius: 20px;
+    padding: 15px 25px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 30px rgba(244, 67, 54, 0.5);
+    min-width: 400px;
+    color: #ffffff;
+    z-index: 150;
+}
+
+.boss-health-bar.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-30px) scale(0.9);
+    pointer-events: none;
+}
+
+.boss-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.boss-name {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #ffff00;
+    text-shadow: 
+        0 0 8px rgba(255, 255, 0, 0.8),
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.boss-phase {
+    font-size: 1em;
+    font-weight: bold;
+    color: #ff9800;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.boss-health-container {
+    position: relative;
+    width: 100%;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 8px;
+}
+
+.boss-health-fill {
+    height: 100%;
+    background: linear-gradient(90deg, 
+        #4caf50 0%, 
+        #ff9800 60%, 
+        #f44336 100%);
+    border-radius: 6px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 12px rgba(244, 67, 54, 0.8);
+    position: relative;
+}
+
+.boss-health-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.4) 50%, 
+        transparent 100%);
+    animation: healthShimmer 1.5s ease-in-out infinite;
+}
+
+.boss-health-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.75em;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+    pointer-events: none;
+}
+
+.boss-abilities {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.ability-indicators {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.ability-indicator {
+    background: rgba(255, 152, 0, 0.9);
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.7em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 8px rgba(255, 152, 0, 0.4);
+    animation: abilityPulse 1s ease-in-out infinite;
+}
+
+/* Boss警告 */
+.boss-warning {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, 
+        rgba(255, 87, 34, 0.98) 0%, 
+        rgba(244, 67, 54, 0.95) 100%);
+    border: 4px solid rgba(255, 152, 0, 0.9);
+    border-radius: 25px;
+    padding: 30px 50px;
+    backdrop-filter: blur(20px);
+    box-shadow: 
+        0 15px 40px rgba(255, 87, 34, 0.6),
+        inset 0 0 20px rgba(255, 152, 0, 0.3);
+    color: #ffffff;
+    text-align: center;
+    z-index: 200;
+    animation: bossWarningPulse 1s ease-in-out infinite;
+}
+
+.boss-warning.hidden {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    pointer-events: none;
+}
+
+.warning-text {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #ffff00;
+    text-shadow: 
+        0 0 15px rgba(255, 255, 0, 0.9),
+        3px 3px 6px rgba(0, 0, 0, 0.8);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.warning-subtext {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+/* 动画关键帧 */
+@keyframes expShimmer {
+    0%, 100% {
+        opacity: 0.5;
+        transform: translateX(-200%);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(200%);
+    }
+}
+
+@keyframes skillPointsPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 25px rgba(156, 39, 176, 0.5);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 12px 35px rgba(156, 39, 176, 0.7);
+    }
+}
+
+@keyframes starRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes healthShimmer {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translateX(-100%);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateX(100%);
+    }
+}
+
+@keyframes abilityPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+@keyframes bossWarningPulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow: 
+            0 15px 40px rgba(255, 87, 34, 0.6),
+            inset 0 0 20px rgba(255, 152, 0, 0.3);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.05);
+        box-shadow: 
+            0 20px 50px rgba(255, 87, 34, 0.8),
+            inset 0 0 30px rgba(255, 152, 0, 0.5);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .level-display {
+        top: 15px;
+        left: 15px;
+        padding: 12px 16px;
+        min-width: 100px;
+    }
+    
+    .level-number {
+        font-size: 1.8em;
+    }
+    
+    .currency-display {
+        top: 15px;
+        right: 15px;
+    }
+    
+    .currency-item {
+        padding: 6px 12px;
+        min-width: 70px;
+    }
+    
+    .boss-health-bar {
+        min-width: 300px;
+        padding: 12px 20px;
+    }
+    
+    .boss-name {
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 768px) {
+    .level-display {
+        top: 10px;
+        left: 10px;
+        padding: 10px 14px;
+    }
+    
+    .level-number {
+        font-size: 1.6em;
+    }
+    
+    .currency-display {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .currency-item {
+        padding: 5px 10px;
+        gap: 6px;
+    }
+    
+    .skill-points-display {
+        bottom: 15px;
+        left: 10px;
+        padding: 10px 14px;
+    }
+    
+    .boss-health-bar {
+        min-width: 250px;
+        padding: 10px 15px;
+    }
+    
+    .warning-text {
+        font-size: 2em;
+    }
+    
+    .warning-subtext {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .level-display,
+    .currency-display,
+    .skill-points-display {
+        transform: scale(0.9);
+    }
+    
+    .boss-health-bar {
+        min-width: 200px;
+        transform: translateX(-50%) scale(0.9);
+    }
+    
+    .boss-warning {
+        padding: 20px 30px;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    
+    .warning-text {
+        font-size: 1.5em;
+    }
+}
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+    .level-display,
+    .currency-item,
+    .skill-points-display,
+    .boss-health-bar {
+        border-width: 3px;
+        box-shadow: none;
+    }
+    
+    .level-number,
+    .skill-points-amount,
+    .boss-name {
+        text-shadow: none;
+        font-weight: 900;
+    }
+}
+
+/* 减少动画模式 */
+@media (prefers-reduced-motion: reduce) {
+    .level-display,
+    .currency-item,
+    .skill-points-display,
+    .boss-health-bar,
+    .boss-warning {
+        animation: none !important;
+        transition: opacity 0.3s ease !important;
+    }
+    
+    .exp-fill::after,
+    .boss-health-fill::after {
+        display: none;
+    }
+    
+    .skill-points-icon {
+        animation: none;
+    }
+}
