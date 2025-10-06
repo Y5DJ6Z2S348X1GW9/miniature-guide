@@ -241,7 +241,10 @@ class GameManager {
         this.survivalTime += deltaTime;
         
         // 应用时间缩放
-        const scaledDeltaTime = deltaTime * timeEffectsManager.getTimeScale();
+        const timeScale = (typeof timeEffectsManager !== 'undefined' && timeEffectsManager.getTimeScale) 
+            ? timeEffectsManager.getTimeScale() 
+            : 1.0;
+        const scaledDeltaTime = deltaTime * timeScale;
         
         // 更新输入
         inputManager.update();

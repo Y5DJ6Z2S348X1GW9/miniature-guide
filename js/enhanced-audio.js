@@ -751,5 +751,5 @@ class EnhancedAudioManager {
 // 创建全局增强音频管理器实例
 const enhancedAudioManager = new EnhancedAudioManager();
 
-// 为了兼容现有代码，创建别名
-const audioManager = enhancedAudioManager;
+// 不创建audioManager别名避免与audio.js冲突
+// 使用 enhancedAudioManager 作为独立的增强音频系统

@@ -352,6 +352,24 @@ class AdvancedEnemySystem {
         });
     }
     
+    // 主更新方法 - 被主游戏循环调用
+    update(deltaTime) {
+        // 更新所有注册的高级敌人
+        if (typeof enemyManager !== 'undefined' && enemyManager.enemies) {
+            enemyManager.enemies.forEach(enemy => {
+                if (enemy.isAdvanced && enemy.active) {
+                    this.updateAdvancedEnemy(enemy, deltaTime, player);
+                }
+            });
+        }
+        
+        // 更新敌人组
+        this.updateEnemyGroups(deltaTime);
+        
+        // 更新特殊效果
+        this.updateSpecialEffects(deltaTime);
+    }
+    
     // 更新高级敌人
     updateAdvancedEnemy(enemy, deltaTime, player) {
         if (!enemy.active) return;
@@ -1159,6 +1177,60 @@ class AdvancedEnemySystem {
         ctx.restore();
     }
     
+    // 更新敌人组
+    updateEnemyGroups(deltaTime) {
+        this.enemyGroups.forEach((group, groupId) => {
+            // 清理已死亡的成员
+            group.members = group.members.filter(member => member.active);
+            
+            // 如果组为空，删除组
+            if (group.members.length === 0) {
+                this.enemyGroups.delete(groupId);
+                return;
+            }
+            
+            // 更新组行为
+            if (group.type === 'swarm') {
+                this.updateSwarmBehavior(group, deltaTime);
+            }
+        });
+    }
+    
+    // 更新蜂群行为
+    updateSwarmBehavior(group, deltaTime) {
+        if (group.members.length === 0) return;
+        
+        // 计算重心
+        const centerX = group.members.reduce((sum, member) => sum + member.x, 0) / group.members.length;
+        const centerY = group.members.reduce((sum, member) => sum + member.y, 0) / group.members.length;
+        
+        // 更新组中心
+        group.centerX = centerX;
+        group.centerY = centerY;
+        
+        // 蜂群聚拢行为
+        group.members.forEach(member => {
+            if (member.type === 'swarm') {
+                // 向组中心靠拢的力
+                const dx = centerX - member.x;
+                const dy = centerY - member.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance > group.cohesionDistance || 100) {
+                    const force = 0.02;
+                    member.vx += (dx / distance) * force;
+                    member.vy += (dy / distance) * force;
+                }
+            }
+        });
+    }
+    
+    // 更新特殊效果
+    updateSpecialEffects(deltaTime) {
+        // 这里可以添加全局特殊效果的更新逻辑
+        // 比如全局环境效果、区域伤害等
+    }
+    
     // 获取统计信息
     getStats() {
         return {
@@ -1167,7 +1239,7 @@ class AdvancedEnemySystem {
                 acc[group.type] = (acc[group.type] || 0) + 1;
                 return acc;
             }, {}),
-            specialEffectsCount: this.specialEffects.length
+            specialEffectsCount: this.specialEffects ? this.specialEffects.length : 0
         };
     }
     
